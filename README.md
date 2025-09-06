@@ -1,41 +1,33 @@
 # AI-Powered Equity Research Report Generator
 
-This project provides a Jupyter Notebook (`.ipynb`) that generates a comprehensive, multi-section equity research report for stocks listed on the National Stock Exchange (NSE) of India.
-
-It leverages the Google Gemini model to analyze both a company's official annual report and live market data, producing a detailed report that serves as a powerful first draft for investors and analysts.
+It uses the Google Gemini model to examine both a company's official annual report and live market data. This generates a thorough report that acts as a first draft for analysts.
 
 ## Note
 
-Please note that this project is a **Minimum Viable Product (MVP)** designed to demonstrate the core workflow. As an early version, it requires the user to manually find and upload the company's annual report PDF. The current model excels at synthesizing and analyzing the provided text but does not yet perform its own mathematical calculations for metrics like Discounted Cash Flow (DCF). Future versions will aim to automate document retrieval, integrate direct financial metric calculations, and generate significantly more comprehensive and quantitative reports.
+This project is a **Minimum Viable Product (MVP)** aimed at showing the main workflow. As an early version, it requires the user to manually find and upload the company's annual report PDF. The current model is good at interpreting the provided text but doesn't yet do its own calculations for metrics like Discounted Cash Flow (DCF). Future updates will try to focus on automating document retrieval, integrating direct financial calculations, and producing much more detailed reports.
 
----
 
 ## How It Works
 
-The process is designed to synthesize detailed financial documents with real-time data to create an insightful report:
-
-1.  **User Input:** The user defines a target stock ticker (e.g., "RELIANCE") and is prompted to upload the company's latest annual report in PDF format.
-2.  **Data Extraction:** The script extracts text from the first 50 pages of the uploaded PDF, capturing key information like the management's discussion, business overviews, and financial summaries.
-3.  **Live Data Fetching:** It then uses the `yfinance` library to pull the latest available market data, including a business summary and key stock price metrics (52-week high/low, last close, 1-year return).
-4.  **Prompt Engineering:** The extracted annual report text and the live market data are combined into a single, comprehensive prompt. This prompt instructs the Gemini model to act as a senior analyst and structure its output into specific, professional sections.
-5.  **AI Generation:** The request is sent to the Gemini API, which generates the final, detailed equity research report.
-
----
+1.  **User Input:** The user selects a stock ticker (e.g., "RELIANCE") and uploads the company's latest annual report in PDF format.
+2.  **Data Extraction:** The script extracts text from the first 50 pages of the uploaded PDF
+3.  **Live Data Fetching:** It then uses the `yfinance` library to obtain a business summary and key stock price metrics (52-week high/low, last close, 1-year return).
+4.  **Prompt Engineering:** The extracted annual report text and live market data are combined into one cohesive prompt, guiding the Gemini model to behave like a senior analyst and organize the output into specific professional sections.
+5.  **AI Generation:** The request is sent to the Gemini API, which produces the final, equity research report.
 
 ## Setup and Usage
 
-The notebook is largely self-explanatory, but the key setup step is configuring your API key.
+The main setup step involves configuring your API key.
 
 ### **1. Get a Google AI API Key**
 
-First, you need to generate a free API key from Google AI Studio:
+To start, generate a free API key from Google AI Studio:
 - Go to [**Google AI Studio**](https://aistudio.google.com/app/apikey).
 - Click **"Create API key"** and copy the generated key.
 
 ### **2. Set Up the API Key in Google Colab**
 
-For security, the notebook is designed to read your API key from Colab's built-in Secrets manager.
-
+For security, the notebook reads your API key from Colab's built-in Secrets manager.
 - Open the notebook in Google Colab.
 - Click the **key icon** in the left sidebar to open the "Secrets" tab.
 - Click **"Add a new secret"**.
@@ -44,22 +36,17 @@ For security, the notebook is designed to read your API key from Colab's built-i
 
 ### **3. Run the Notebook**
 
-Run the cells in the notebook from top to bottom. You will be prompted to upload the annual report PDF when you reach that step.
-
----
+Execute the cells in the notebook from top to bottom. You will be asked to upload the annual report PDF when you reach that section.
 
 ## Model Selection: Gemini Flash vs. Pro
 
-This project uses the `gemini-1.5-flash-latest` model. While the `pro` model is also highly capable, the `flash` model was chosen for a key reason: **rate limits**.
+This project uses the `gemini-1.5-flash-latest` model. While the `pro` model is also very capable, the `flash` model was chosen due to **rate limits**.
 
-The free tier of the Gemini API has limits on not just how many requests you can make per minute (RPM), but also on how many total tokens (words) you can process per minute (TPM). Because this tool sends a large amount of text from the annual report, a single request can easily exceed the free TPM limit of the `pro` model. The `flash` model is optimized for speed and often has more generous free-tier limits, making it more reliable for this high-volume token task.
-
----
+The free tier of the Gemini API places limits on both the number of requests you can make per minute (RPM) and the total tokens (words) you can process each minute (TPM). Since this tool sends a lot of text from the annual report, a single request can quickly exceed the free TPM limit of the `pro` model. The `flash` model is designed for speed and usually has more generous free tier limits, making it more suitable for this high-volume task.
 
 ## Limitations
 
-While this tool produces a high-quality and detailed report, it is an MVP with key limitations to be aware of:
+While this tool produces a report, it is an MVP with limitations to consider:
 
--   **Valuation is a Synthesis, Not a Calculation:** The AI does **not** perform a mathematical DCF or any other valuation. When it provides a target price, it is generating text that *mimics* the output of a valuation based on patterns from countless reports it was trained on. The numbers are plausible but not the result of a verifiable calculation.
--   **Dependent on Source Documents:** The report's quality is entirely dependent on the quality and content of the uploaded annual report. It does not have access to quarterly reports, conference call transcripts, or other sources.
--   **Data Source Reliability:** The `yfinance` library depends on Yahoo Finance, which can occasionally have temporary data availability issues for certain tickers.
+-   **Valuation is a not a Calculation:** The AI does **not** perform a mathematical DCF or any other valuation. When it gives a target price, it generates text that *mimics* valuation outputs based on patterns from many reports it has seen.
+-   **Dependent on Source Documents:** The report's quality entirely relies on the quality and content of the uploaded annual report. It does not access quarterly reports, conference call transcripts, or other sources.
