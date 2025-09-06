@@ -5,7 +5,9 @@ This project provides a Jupyter Notebook (`.ipynb`) that generates a comprehensi
 It leverages the Google Gemini model to analyze both a company's official annual report and live market data, producing a detailed report that serves as a powerful first draft for investors and analysts.
 
 ## Note
+
 Please note that this project is a **Minimum Viable Product (MVP)** designed to demonstrate the core workflow. As an early version, it requires the user to manually find and upload the company's annual report PDF. The current model excels at synthesizing and analyzing the provided text but does not yet perform its own mathematical calculations for metrics like Discounted Cash Flow (DCF). Future versions will aim to automate document retrieval, integrate direct financial metric calculations, and generate significantly more comprehensive and quantitative reports.
+
 ---
 
 ## How It Works
